@@ -47,6 +47,10 @@ class _HomeState extends State<Home> {
   double variationNasdaq;
 
   void _realChanged(String text) {
+            if(text.isEmpty) {
+      _clearAll();
+      return;
+    }
     double real = double.parse(text);
     dollarController.text = (real / dolar).toStringAsFixed(2);
     euroController.text = (real / euro).toStringAsFixed(2);
@@ -54,6 +58,10 @@ class _HomeState extends State<Home> {
   }
 
   void _dolarChanged(String text) {
+        if(text.isEmpty) {
+      _clearAll();
+      return;
+    }
     double dolar = double.parse(text);
     realController.text = (dolar * this.dolar).toStringAsFixed(2);
     euroController.text = (dolar * this.dolar / euro).toStringAsFixed(2);
@@ -61,6 +69,10 @@ class _HomeState extends State<Home> {
   }
 
   void _euroChanged(String text) {
+        if(text.isEmpty) {
+      _clearAll();
+      return;
+    }
     double euro = double.parse(text);
     realController.text = (euro * this.euro).toStringAsFixed(2);
     dollarController.text = (euro * this.euro / dolar).toStringAsFixed(2);
@@ -68,10 +80,21 @@ class _HomeState extends State<Home> {
   }
 
   void _bitcoinChanged(String text) {
+        if(text.isEmpty) {
+      _clearAll();
+      return;
+    }
     double bitcoin = double.parse(text);
     realController.text = (bitcoin * this.bitcoin).toStringAsFixed(2);
     dollarController.text = (bitcoin * this.bitcoin / dolar).toStringAsFixed(2);
     euroController.text = (bitcoin * this.bitcoin / euro).toStringAsFixed(2);
+  }
+
+  void _clearAll(){
+    realController.text = "";
+    dollarController.text = "";
+    euroController.text = "";
+    bitcoinController.text = "";
   }
 
   @override
@@ -177,7 +200,7 @@ Widget buildtextField(String label, String prefix,
         prefixText: prefix),
     style: TextStyle(color: Colors.amber, fontSize: 25),
     onChanged: function,
-    keyboardType: TextInputType.number,
+    keyboardType: TextInputType.numberWithOptions(decimal: true),
   );
 }
 
